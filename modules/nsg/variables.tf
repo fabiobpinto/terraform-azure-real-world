@@ -24,16 +24,19 @@ variable "nsg_subnet_id" {
 }
 
 variable "nsg_rules" {
-  description = "List of NSG rules"
+  description = "Lista de regras do NSG"
   type = list(object({
-    name                       = string
-    priority                   = number
-    direction                  = string
-    access                     = string
-    protocol                   = string
-    source_port_range          = string
-    destination_port_range     = string
-    source_address_prefix      = string
-    destination_address_prefix = string
+    name      = string
+    priority  = number
+    direction = string
+
+    access    = optional(string, "Allow")
+    protocol  = optional(string, "Tcp")
+
+    source_port_range      = optional(string, "*")
+    destination_port_range = string
+
+    source_address_prefix      = optional(string, "*")
+    destination_address_prefix = optional(string, "*")
   }))
 }

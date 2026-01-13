@@ -31,5 +31,5 @@ module "nsg" {
 
   nsg_subnet_id = module.network.subnet_ids[each.key]
 
-  nsg_rules = var.nsg_rules[each.value.rule].rules
+  nsg_rules = var.nsg_rules[each.value.rule]
 }

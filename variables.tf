@@ -39,17 +39,19 @@ variable "nsg_name" {
 }
 
 variable "nsg_rules" {
-  type = map(object({
-    rules = list(object({
-      name                       = string
-      priority                   = number
-      direction                  = string
-      access                     = string
-      protocol                   = string
-      source_port_range          = string
-      destination_port_range     = string
-      source_address_prefix      = string
-      destination_address_prefix = string
-    }))
-  }))
+  description = "Regras de NSG por tipo de subnet"
+  type = map(list(object({
+    name      = string
+    priority  = number
+    direction = string
+
+    access    = optional(string, "Allow")
+    protocol  = optional(string, "Tcp")
+
+    source_port_range      = optional(string, "*")
+    destination_port_range = string
+
+    source_address_prefix      = optional(string, "*")
+    destination_address_prefix = optional(string, "*")
+  })))
 }
