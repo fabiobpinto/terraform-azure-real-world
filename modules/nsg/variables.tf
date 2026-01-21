@@ -30,8 +30,8 @@ variable "nsg_rules" {
     priority  = number
     direction = string
 
-    access    = optional(string, "Allow")
-    protocol  = optional(string, "Tcp")
+    access   = optional(string, "Allow")
+    protocol = optional(string, "Tcp")
 
     source_port_range      = optional(string, "*")
     destination_port_range = string
