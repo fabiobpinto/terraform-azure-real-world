@@ -133,7 +133,7 @@ vms_linux_app = {
     name                            = "linuxapp01"
     computer_name                   = "linuxapp01"
     size                            = "Standard_DS1_v2"
-    enable_public_ip                = true
+    enable_public_ip                = false
     pip_name                        = "linuxapp01-pip"
 
     source_image_reference = {
@@ -166,6 +166,7 @@ vms_linux_web = {
     name                            = "linuxweb01"
     computer_name                   = "linuxweb01"
     size                            = "Standard_DS1_v2"
+    enable_public_ip                = true
 
     source_image_reference = {
       publisher = "Canonical"

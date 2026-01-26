@@ -25,3 +25,11 @@ output "vms_app_public_ips" {
     vm_key => pip.public_ip_address
   }
 }
+
+output "vms_web_public_ips" {
+  description = "IPs públicos das VMs web"
+  value = {
+    for vm_key, pip in module.public_ip_web :
+    vm_key => pip.public_ip_address
+  }
+}
