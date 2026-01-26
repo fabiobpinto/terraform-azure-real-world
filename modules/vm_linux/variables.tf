@@ -18,6 +18,7 @@ variable "vm_linux" {
     admin_username                  = string
     admin_pass                      = string
     vm_name                         = string
+    computer_name                   = string
     vm_size                         = string
     disable_password_authentication = bool
 
@@ -37,7 +38,6 @@ variable "vm_linux" {
 
 }
 
-####
 variable "nic_info" {
   type = object({
     name = string
@@ -61,18 +61,9 @@ variable "auto_shutdown" {
   type = object({
     enabled        = bool
     time           = string
-    timezone       = string # Ex: "E. South America Standard Time"
+    timezone       = string
     notify         = bool
     notify_minutes = number
     email          = string
   })
-
-  default = {
-    enabled        = false
-    time           = "1800"
-    timezone       = "E. South America Standard Time"
-    notify         = false
-    notify_minutes = 30
-    email          = null
-  }
 }

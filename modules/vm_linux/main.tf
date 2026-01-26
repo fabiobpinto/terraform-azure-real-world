@@ -16,19 +16,23 @@ resource "azurerm_network_interface" "nic_linux" {
 
 resource "azurerm_linux_virtual_machine" "vm_linux" {
   name                            = var.vm_linux.vm_name
+  computer_name                   = var.vm_linux.computer_name
   resource_group_name             = var.rg_name
   location                        = var.location
   size                            = var.vm_linux.vm_size
   admin_username                  = var.vm_linux.admin_username
   admin_password                  = var.vm_linux.admin_pass
   disable_password_authentication = var.vm_linux.disable_password_authentication
+
   network_interface_ids = [
     azurerm_network_interface.nic_linux.id
   ]
 
+  custom_data = filebase64("${path.module}/cloud-init/bootstrap.sh")
+
   admin_ssh_key {
     username   = var.vm_linux.admin_username
-    public_key = file("${path.root}/ssh-keys/terraform-azure.pub")
+    public_key = file("${path.module}/ssh-keys/terraform-azure.pub")
   }
 
   os_disk {

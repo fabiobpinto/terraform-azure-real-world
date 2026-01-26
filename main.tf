@@ -62,6 +62,7 @@ module "vms_app" {
     admin_pass                      = var.admin_pass
     disable_password_authentication = each.value.disable_password_authentication
     vm_name                         = each.value.name
+    computer_name                   = each.value.computer_name
     vm_size                         = each.value.size
 
     os_disk = {
@@ -112,6 +113,7 @@ module "vms_web" {
     admin_pass                      = var.admin_pass
     disable_password_authentication = each.value.disable_password_authentication
     vm_name                         = each.value.name
+    computer_name                   = each.value.computer_name
     vm_size                         = each.value.size
 
     os_disk = {

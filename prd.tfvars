@@ -131,9 +131,12 @@ vms_linux_app = {
     admin_username                  = "adminfabio"
     disable_password_authentication = false
     name                            = "linuxapp01"
+    computer_name                   = "linuxapp01"
     size                            = "Standard_DS1_v2"
     enable_public_ip                = true
     pip_name                        = "linuxapp01-pip"
+
+    # enable_bootstrap = false
 
     source_image_reference = {
       publisher = "RedHat"
@@ -163,12 +166,15 @@ vms_linux_web = {
     admin_username                  = "adminfabio"
     disable_password_authentication = false
     name                            = "linuxweb01"
+    computer_name                   = "linuxweb01"
     size                            = "Standard_DS1_v2"
 
+    # enable_bootstrap = true
+
     source_image_reference = {
-      publisher = "RedHat"
-      offer     = "RHEL"
-      sku       = "9-lvm-gen2"
+      publisher = "Canonical"
+      offer     = "ubuntu-24_04-lts"
+      sku       = "server"
       version   = "latest"
     }
 

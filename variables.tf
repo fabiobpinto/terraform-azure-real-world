@@ -29,7 +29,7 @@ variable "subnets" {
   type = map(object({
     name             = string
     address_prefixes = list(string)
-    rule             = string # web | app | db | bastion
+    rule             = string
   }))
 }
 
@@ -70,6 +70,7 @@ variable "vms_linux_app" {
   type = map(object({
     admin_username                  = string
     name                            = string
+    computer_name                   = string
     size                            = string
     disable_password_authentication = bool
 
@@ -104,8 +105,12 @@ variable "vms_linux_web" {
   type = map(object({
     admin_username                  = string
     name                            = string
+    computer_name                   = string
     size                            = string
     disable_password_authentication = bool
+
+    enable_public_ip = optional(bool)
+    pip_name         = optional(string)
 
     os_disk = object({
       caching              = string
