@@ -134,3 +134,21 @@ variable "vms_linux_web" {
     })
   }))
 }
+
+# Bastion Host Configuration - Depending of type of SKU, some features may not be available
+variable "bastion" {
+  description = "Configuration object for the bastion host."
+  type = map(object({
+    copy_paste_enabled        = optional(bool, true)
+    file_copy_enabled         = optional(bool, false)
+    ip_connect_enabled        = optional(bool, false)
+    kerberos_enabled          = optional(bool, false)
+    scale_units               = optional(number, 2)
+    session_recording_enabled = optional(bool, false)
+    shareable_link_enabled    = optional(bool, false)
+    sku                       = optional(string, "Basic")
+    tunneling_enabled         = optional(bool, false)
+    virtual_network_id        = optional(string, null)
+    zones                     = optional(list(string), [])
+  }))
+}

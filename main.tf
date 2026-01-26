@@ -167,3 +167,34 @@ module "vms_web" {
     email          = null
   }
 }
+
+#####################################################
+### Bastion - IGNORE ###
+#####################################################
+# # Public IP Bastion
+# module "public_ip_bastion" {
+#   source = "./modules/public_ip"
+#   for_each = var.bastion
+#   rg_name  = module.rg.rg_name
+#   location = module.rg.location
+#   tags     = var.tags
+#   pip_name = "${each.key}-pip"
+# }
+
+
+# # Bastion Host
+# module "bastion_host" {
+#   source   = "./modules/bastion"
+#   location = module.rg.location
+#   rg_name  = module.rg.rg_name
+#   tags     = var.tags
+#   for_each = var.bastion
+#   bastion_name        = each.key
+#   bastion_subnet_id   = module.network.subnet_ids["bastion"]
+#   public_ip_address_id = module.public_ip_bastion[each.key].public_ip_id
+#   bastion = {
+#     scale_units               = each.value.scale_units
+#     sku                       = each.value.sku
+#   }
+# }
+#####################################################

@@ -19,7 +19,7 @@ variable "nsg_name" {
 }
 
 variable "nsg_subnet_id" {
-  description = "Network Security Group number"
+  description = "The ID of the subnet where the network security group will be deployed."
   type        = any
 }
 

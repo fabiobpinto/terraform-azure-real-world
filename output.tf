@@ -33,3 +33,15 @@ output "vms_web_public_ips" {
     vm_key => pip.public_ip_address
   }
 }
+
+#####################################################
+### Bastion - IGNORE ###
+#####################################################
+# output "bastion_public_ips" {
+#   description = "IPs públicos do bastion"
+#   value = {
+#     for vm_key, pip in module.public_ip_bastion :
+#     vm_key => pip.public_ip_address
+#   }
+# }
+#####################################################
