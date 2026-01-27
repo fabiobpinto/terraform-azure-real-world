@@ -19,9 +19,9 @@ resource "azurerm_bastion_host" "bastion" {
     subnet_id            = var.bastion_subnet_id
     public_ip_address_id = var.public_ip_address_id
   }
-    tags = var.tags
+  tags = var.tags
 
-   timeouts {
+  timeouts {
     create = "60m"
     delete = "60m"
     update = "60m"

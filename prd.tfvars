@@ -1,6 +1,6 @@
 rg_name  = "rg-prd-real-world"
 location = "East US"
-
+########################################################################
 ### Tags to apply to all resources
 tags = {
   environment = "prd"
@@ -8,7 +8,9 @@ tags = {
   project     = "Azure Real World"
 }
 
+########################################################################
 ### Virtual Network and Subnets configuration
+########################################################################
 vnet_name          = "vnet-prd"
 vnet_address_space = ["10.0.0.0/16"]
 
@@ -35,10 +37,9 @@ subnets = {
   }
 }
 
+########################################################################
 ### Network Security Group Rules
-#####################################################
-# Variables for Network Security Group and Rules
-#####################################################
+########################################################################
 nsg_name = "nsg-prd"
 nsg_rules = {
   web = [
@@ -61,7 +62,6 @@ nsg_rules = {
       destination_port_range = "22"
     }
   ]
-
   app = [
     {
       name                   = "Allow-App"
@@ -76,7 +76,6 @@ nsg_rules = {
       destination_port_range = "22"
     }
   ]
-
   db = [
     {
       name                   = "Allow-MySQL"
@@ -85,7 +84,6 @@ nsg_rules = {
       destination_port_range = "3306"
     }
   ]
-
   bastion = [
     {
       name                       = "Allow-HTTPS-In"
@@ -122,8 +120,9 @@ nsg_rules = {
   ]
 }
 
-#VMs
+########################################################################
 # Virtual Machines
+########################################################################
 admin_username = "adminfabio"
 
 vms_linux_app = {
@@ -196,7 +195,7 @@ vms_linux_web = {
 #####################################################
 bastion = {
   bastion01 = {
-      scale_units          = 2
-      sku                  = "Basic"
+    scale_units = 2
+    sku         = "Basic"
   }
 }

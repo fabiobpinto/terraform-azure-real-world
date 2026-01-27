@@ -6,7 +6,9 @@ module "rg" {
   tags     = var.tags
 }
 
+########################################################################
 # Virtual Network
+########################################################################
 module "network" {
   source             = "./modules/virtual_network"
   rg_name            = module.rg.rg_name
@@ -16,8 +18,9 @@ module "network" {
   subnets            = var.subnets
   tags               = var.tags
 }
-
+########################################################################
 # Network Security Group
+########################################################################
 module "nsg" {
   source = "./modules/nsg"
 
@@ -34,7 +37,10 @@ module "nsg" {
   nsg_rules = var.nsg_rules[each.value.rule]
 }
 
+########################################################################
 # Public IP
+########################################################################
+
 module "public_ip_app" {
   source = "./modules/public_ip"
 
@@ -48,6 +54,39 @@ module "public_ip_app" {
   tags     = var.tags
   pip_name = "${each.key}-pip"
 }
+
+# Public IP
+module "public_ip_web" {
+  source = "./modules/public_ip"
+
+  for_each = {
+    for k, v in var.vms_linux_web : k => v
+    if try(v.enable_public_ip, false)
+  }
+
+  rg_name  = module.rg.rg_name
+  location = module.rg.location
+  tags     = var.tags
+  pip_name = "${each.key}-pip"
+}
+
+########################################################################
+### Bastion - IGNORE ###
+########################################################################
+# # Public IP Bastion
+# module "public_ip_bastion" {
+#   source = "./modules/public_ip"
+#   for_each = var.bastion
+#   rg_name  = module.rg.rg_name
+#   location = module.rg.location
+#   tags     = var.tags
+#   pip_name = "${each.key}-pip"
+# }
+
+
+########################################################################
+# Virtual Machines Linux
+########################################################################
 
 module "vms_app" {
   source   = "./modules/vm_linux"
@@ -64,7 +103,7 @@ module "vms_app" {
     vm_name                         = each.value.name
     computer_name                   = each.value.computer_name
     vm_size                         = each.value.size
-    enable_public_ip = try(each.value.enable_public_ip, false)
+    enable_public_ip                = try(each.value.enable_public_ip, false)
 
     os_disk = {
       caching              = each.value.os_disk.caching
@@ -101,20 +140,6 @@ module "vms_app" {
   }
 }
 
-# Public IP
-module "public_ip_web" {
-  source = "./modules/public_ip"
-
-  for_each = {
-    for k, v in var.vms_linux_web : k => v
-    if try(v.enable_public_ip, false)
-  }
-
-  rg_name  = module.rg.rg_name
-  location = module.rg.location
-  tags     = var.tags
-  pip_name = "${each.key}-pip"
-}
 
 
 module "vms_web" {
@@ -168,20 +193,10 @@ module "vms_web" {
   }
 }
 
-#####################################################
+
+########################################################################
 ### Bastion - IGNORE ###
-#####################################################
-# # Public IP Bastion
-# module "public_ip_bastion" {
-#   source = "./modules/public_ip"
-#   for_each = var.bastion
-#   rg_name  = module.rg.rg_name
-#   location = module.rg.location
-#   tags     = var.tags
-#   pip_name = "${each.key}-pip"
-# }
-
-
+########################################################################
 # # Bastion Host
 # module "bastion_host" {
 #   source   = "./modules/bastion"
@@ -197,4 +212,4 @@ module "vms_web" {
 #     sku                       = each.value.sku
 #   }
 # }
-#####################################################
+########################################################################
