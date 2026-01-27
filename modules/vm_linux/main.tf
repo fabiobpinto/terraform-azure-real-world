@@ -28,7 +28,7 @@ resource "azurerm_linux_virtual_machine" "vm_linux" {
     azurerm_network_interface.nic_linux.id
   ]
 
-  custom_data = filebase64("${path.module}/cloud-init/bootstrap.sh")
+  custom_data = base64encode(file("${path.module}/cloud-init/cloud-init.yml"))
 
   admin_ssh_key {
     username   = var.vm_linux.admin_username
@@ -49,7 +49,8 @@ resource "azurerm_linux_virtual_machine" "vm_linux" {
 
   lifecycle {
     ignore_changes = [
-      admin_password
+      admin_password,
+      custom_data
     ]
   }
 
