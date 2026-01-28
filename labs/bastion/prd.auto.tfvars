@@ -196,6 +196,6 @@ vms_linux_web = {
 bastion = {
   bastion01 = {
     scale_units = 2
-    sku         = "Basic"
+    sku         = "Standard"
   }
 }

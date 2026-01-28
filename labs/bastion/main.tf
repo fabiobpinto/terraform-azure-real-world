@@ -2,7 +2,7 @@
 ### Resource Group
 ########################################################################
 module "rg" {
-  source   = "./modules/resource_group"
+  source   = "../../modules/resource_group"
   rg_name  = var.rg_name
   location = var.location
   tags     = var.tags
@@ -12,7 +12,7 @@ module "rg" {
 ### Virtual Network
 ########################################################################
 module "network" {
-  source             = "./modules/virtual_network"
+  source             = "../../modules/virtual_network"
   rg_name            = module.rg.rg_name
   location           = module.rg.location
   vnet_name          = var.vnet_name
@@ -25,7 +25,7 @@ module "network" {
 ### Network Security Group
 ########################################################################
 module "nsg" {
-  source = "./modules/nsg"
+  source = "../../modules/nsg"
 
   for_each = var.subnets
 
@@ -44,7 +44,7 @@ module "nsg" {
 ### Vms Public IP
 ########################################################################
 module "public_ip_app" {
-  source = "./modules/public_ip"
+  source = "../../modules/public_ip"
 
   for_each = {
     for k, v in var.vms_linux_app : k => v
@@ -58,7 +58,7 @@ module "public_ip_app" {
 }
 
 module "public_ip_web" {
-  source = "./modules/public_ip"
+  source = "../../modules/public_ip"
 
   for_each = {
     for k, v in var.vms_linux_web : k => v
@@ -75,7 +75,7 @@ module "public_ip_web" {
 ### Bastion Public IP
 ########################################################################
 module "public_ip_bastion" {
-  source   = "./modules/public_ip"
+  source   = "../../modules/public_ip"
   for_each = var.bastion
   rg_name  = module.rg.rg_name
   location = module.rg.location
@@ -88,7 +88,7 @@ module "public_ip_bastion" {
 ### Virtual Machines Linux
 ########################################################################
 module "vms_app" {
-  source   = "./modules/vm_linux"
+  source   = "../../modules/vm_linux"
   location = var.location
   tags     = var.tags
   rg_name  = module.rg.rg_name
@@ -142,7 +142,7 @@ module "vms_app" {
 
 
 module "vms_web" {
-  source   = "./modules/vm_linux"
+  source   = "../../modules/vm_linux"
   location = var.location
   tags     = var.tags
   rg_name  = module.rg.rg_name
@@ -197,7 +197,7 @@ module "vms_web" {
 ### Bastion Service
 ########################################################################
 module "bastion_host" {
-  source               = "./modules/bastion"
+  source               = "../../modules/bastion"
   location             = module.rg.location
   rg_name              = module.rg.rg_name
   tags                 = var.tags
