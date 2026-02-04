@@ -64,7 +64,7 @@ module "vms_app" {
 
   for_each = var.vms_linux_app
 
-enable_public_ip = try(each.value.enable_public_ip, false)
+  enable_public_ip = try(each.value.enable_public_ip, false)
 
   vm_linux = {
     admin_username                  = each.value.admin_username
