@@ -1,12 +1,19 @@
 # Terraform Azure Loadbalancer Lab
 
+Este laboratório tem como objetivo demonstrar, na prática, a criação e configuração de um **Azure Standard Load Balancer** utilizando **Terraform**, seguindo boas práticas de Infraestrutura como Código (IaC).
 
 
 ---
 
 ## 🧱 Arquitetura do Lab
 
+A arquitetura do laboratório é composta por um Load Balancer Standard público, distribuindo tráfego para múltiplas máquinas virtuais Linux em uma Virtual Network, com regras de balanceamento e Inbound NAT configuradas.
 
+- Servidores Linux (Web VM)
+- Public IP
+- Load Balancer (Backend Pool, Inbound Nat Rules, Health Probe e Load Balancing rules)
+- Subnets
+- NSG
 
 📐 Diagrama da arquitetura:
 
@@ -34,20 +41,19 @@
 [azurerm_lb_nat_rule](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/lb_rule)
 
 
-
-
-
-
-
 ---
 
 ## 🎯 Objetivos do Laboratório
 
-- Criar uma **VNET** utilizando Terraform
-- Implementar **Network Security Groups (NSG)** por subnet
-- Provisionar **Linux Virtual Machines** sem IP público
-- Utilizar **cloud-init (`custom_data`)** para bootstrap das VMs
-- Organizar o código usando **modules reutilizáveis** e **labs independentes**
+- Criar um **Azure Standard Load Balancer** utilizando Terraform
+- Provisionar **Public IP** para exposição do Load Balancer
+- Implementar **Backend Address Pool** com múltiplas VMs Linux
+- Configurar **Health Probes (TCP)** para monitoramento dos backends
+- Criar **Load Balancer Rules** para distribuição de tráfego
+- Implementar **Inbound NAT Rules** para acesso administrativo às VMs
+- Associar NICs das VMs ao Backend Pool
+- Organizar o código utilizando **modules reutilizáveis** e **labs independentes**
+
 
 ---
 
@@ -77,17 +83,18 @@
 
 ## 🔐 Segurança e Boas Práticas
 
-
-
-
-
-
+- Utilização do **Azure Standard Load Balancer**, que exige configuração explícita de regras
+- Separação de responsabilidades utilizando **módulos Terraform**
+- Uso de **Health Probes** para garantir tráfego apenas para backends saudáveis
+- Associação explícita das NICs ao Backend Pool
+- Uso de **Inbound NAT Rules** apenas para fins de administração
+- Infraestrutura totalmente declarativa e idempotente
 
 ---
 
 ## 🚀 Como Executar o Lab
 ```bash
-cd labs/bastion
+cd labs/loadbalancer
 terraform init
 terraform plan -var-file="prd.tfvars"
 terraform apply -var-file="prd.tfvars"
@@ -97,9 +104,11 @@ terraform apply -var-file="prd.tfvars"
 
 ## 🔎 Validações
 
-- Verificar criação da VNET e subnets no Azure Portal
-- Validar NSGs associados às subnets
-- Verificar Azure Bastion Service ativo
+- Validar a criação do **Azure Standard Load Balancer** no Portal
+- Verificar se as VMs estão associadas corretamente ao **Backend Pool**
+- Validar o status dos **Health Probes**
+- Testar o acesso às aplicações via IP público do Load Balancer
+- Verificar o acesso individual às VMs através das **Inbound NAT Rules**
 
 ---
 
