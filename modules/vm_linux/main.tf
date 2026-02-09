@@ -48,8 +48,9 @@ resource "azurerm_linux_virtual_machine" "vm_linux" {
   }
 
   os_disk {
-    caching              = "ReadWrite"
-    storage_account_type = "Standard_LRS"
+    caching              = var.vm_linux.os_disk.caching
+    storage_account_type = var.vm_linux.os_disk.storage_account_type
+    disk_size_gb         = var.vm_linux.os_disk.disk_size_gb
   }
 
   source_image_reference {
